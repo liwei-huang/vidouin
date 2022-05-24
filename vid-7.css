@@ -1,0 +1,532 @@
+/* 基础样式 */
+/* ============================================ */
+
+/* 页面网格布局，三行三列 */
+body {
+  font-family: "Open Sans", sans-serif;
+  margin: 0;
+  display: grid;
+  grid-template-rows: 72px auto auto;
+  grid-template-columns: 72px auto 72px;
+  --theme-color: rgb(131, 68, 52);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* 让图片自适应网格 */
+img {
+  width: 100%;
+  height: auto;
+  vertical-align: bottom;
+}
+
+/* 对屏幕阅读器的样式设置，参考 https://accessibility.18f.gov/hidden-content/ */
+.sr-only {
+  border: 0;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  position: absolute;
+}
+
+/* 多行三列网格 */
+.parts-grid {
+  display: grid;
+  grid-template-columns: 20px auto 20px;
+  margin: 90px 0;
+}
+
+/* 让 .parts-grid 的所有内容放置在第二列，而第一列和第三列用于产生空白 */
+.parts-grid>*,
+.parts-grid::before,
+.parts-grid::after {
+  grid-column: 2;
+}
+
+/* 主体内容最大宽度 1074px，可用宽度小于 1074px 时，自动分配宽度 */
+/* 左右两边的空白平均分配剩余的空间，且最小宽度为 72px */
+@media (min-width: 768px) {
+  .parts-grid {
+    grid-template-columns: minmax(72px, 1fr) minmax(auto, 1074px) minmax(72px, 1fr);
+    margin: 120px 0;
+  }
+}
+
+/* ============================================ */
+
+/* 导航按钮和覆盖全屏的导航菜单 */
+/* ============================================ */
+
+nav {
+  grid-row: 1;
+  grid-column: 3;
+}
+
+nav button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background-color: var(--theme-color);
+  width: 100%;
+  height: 100%;
+  /* 水平竖直居中两条杠 */
+  display: grid;
+  place-content: center;
+  /* 避免被导航菜单覆盖 */
+  position: relative;
+  z-index: 20;
+}
+
+/* 两条杠 */
+nav button::before,
+nav button::after {
+  content: "";
+  display: block;
+  width: 32px;
+  height: 4px;
+  background-color: white;
+  transition: transform .5s;
+}
+
+/* 两条杠间隔 10px */
+nav button::before {
+  transform: translateY(-5px);
+}
+
+nav button::after {
+  transform: translateY(5px);
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  /* 覆盖全屏 */
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, .8);
+  color: white;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 50px;
+  /* 默认关闭覆盖全屏的导航菜单，从右上角过渡缩放动画 */
+  transform: scale(0, 0);
+  transform-origin: right top;
+  transition: transform .5s;
+}
+
+/* 打开覆盖全屏的导航菜单 */
+body.nav-opened nav ul {
+  transform: scale(1, 1);
+}
+
+body.nav-opened {
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* 关闭按钮 */
+body.nav-opened nav button::before {
+  transform: translateY(2px) rotate(45deg);
+}
+
+body.nav-opened nav button::after {
+  transform: translateY(-2px) rotate(-45deg);
+}
+
+nav ul li a:hover {
+  color: var(--theme-color);
+  font-weight: bold;
+}
+
+/* 桌面端竖直滚动条的样式 */
+@media (pointer: fine) and (hover: hover) {
+
+  /* 显示竖直滚动条 */
+  html {
+    overflow-y: scroll;
+  }
+
+  /* 但不能有滚动功能 */
+  body.nav-opened {
+    height: 100vh;
+  }
+}
+
+/* ============================================ */
+
+/* 仅对桌面端设置的装饰线 */
+/* ============================================ */
+
+@media (min-width: 768px) {
+
+  /* 装饰圆 */
+  body::before {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    position: relative;
+  }
+
+  /* 即使主体没有内容，即页面高度不够，也要让装饰线至少有 200px 高度 */
+  body::after {
+    width: 1px;
+    min-height: 200px;
+  }
+
+  /* 装饰线和装饰圆放置在第二行第一列，水平居中 */
+  body::before,
+  body::after {
+    content: "";
+    display: block;
+    background-color: var(--theme-color);
+    grid-row: 2;
+    grid-column: 1;
+    justify-self: center;
+    margin-top: 660px;
+  }
+}
+
+/* ============================================ */
+
+/* 垂直排版的装饰文本 */
+/* ============================================ */
+
+.vertical {
+  grid-row: 2;
+  grid-column: 1;
+  justify-content: start;
+  align-self: start;
+  margin-top: 257px;
+  margin-left: 10px;
+  color: #aaa;
+  font-size: 16px;
+  /* 竖直排版，旋转 180 度，让文字从左往右、从下往上书写 */
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+/* 桌面端，水平居中 .vertical */
+@media (min-width: 768px) {
+  .vertical {
+    justify-self: center;
+    margin-left: 0;
+    font-size: 20px;
+  }
+}
+
+/* ============================================ */
+
+/* Social Networking Services（社会网络服务） */
+/* ============================================ */
+
+aside {
+  grid-row: 2;
+  grid-column: 3;
+  justify-self: end;
+  align-self: start;
+  margin-top: 187px;
+  margin-right: 10px;
+}
+
+.sns {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sns li {
+  margin: 15px 0;
+}
+
+/* 桌面端，水平居中 aside */
+@media (min-width: 768px) {
+  aside {
+    justify-self: center;
+    margin-right: 0;
+  }
+}
+
+/* ============================================ */
+
+/* 主体 */
+/* ============================================ */
+
+main {
+  grid-row: 2;
+  grid-column: 1 / -1;
+}
+
+/* hero */
+/* 让字体的颜色变为黑色，并空出顶部位置来放置文字的头部 */
+.hero {
+  font-size: 20px;
+  background-color: white;
+  padding-top: .9em;
+}
+
+/* hero 子元素全部在第一行，重叠在一起 */
+.hero>* {
+  grid-row: 1;
+  justify-self: center;
+}
+
+.hero h1 {
+  margin-top: -.7em;
+  font-size: 2.4em;
+  font-weight: bold;
+  color: white;
+  mix-blend-mode: difference;
+}
+
+.hero img {
+  width: 260px;
+  height: 400px;
+}
+
+/* 各种尺寸下的 hero */
+@media (min-width: 1024px) {
+  .hero {
+    font-size: 100px;
+  }
+
+  .hero img {
+    width: 600px;
+    height: 700px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .hero {
+    font-size: 60px;
+  }
+
+  .hero img {
+    width: 500px;
+    height: 600px;
+  }
+}
+
+@media (min-width: 374px) and (max-width: 768px) {
+  .hero {
+    font-size: 40px;
+  }
+
+  .hero img {
+    width: 340px;
+    height: 440px;
+  }
+}
+
+/* jumbotron */
+.jumbotron {
+  background-image: url(assets/de_ism_1.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 720px;
+}
+
+/* 只针对 .jumbotron 下的 .text 的毛玻璃样式 */
+.jumbotron .text {
+  align-self: center;
+  color: white;
+  border-radius: 20px;
+  box-shadow: 0 0 20px 6px rgba(0, 0, 0, .2);
+  backdrop-filter: blur(6px);
+}
+
+/* 只针对 .jumbotron 下的 .text-subtitle 的样式 */
+.jumbotron .text-subtitle {
+  color: white;
+}
+
+.text {
+  font-size: 16px;
+  padding: 40px 10px;
+}
+
+.text h2 {
+  font-size: 1.8em;
+  font-weight: bolder;
+  margin: 0 0 10px 0;
+}
+
+.text-subtitle {
+  font-size: .8em;
+  color: #aaa;
+  margin-bottom: 2em;
+}
+
+.text-body {
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+.text-link {
+  display: inline-block;
+  font-size: 1.3em;
+  font-weight: bold;
+  color: white;
+  background-color: var(--theme-color);
+  padding: 10px 18px;
+  margin-top: 2.5em;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.text-link:hover {
+  filter: brightness(1.2);
+}
+
+@media (min-width: 768px) {
+  .jumbotron .text {
+    font-size: 22px;
+    padding: 50px 20px;
+  }
+}
+
+/* article */
+.article figure {
+  grid-row: 1;
+  margin: 0;
+}
+
+.article figure img {
+  height: 400px;
+  object-fit: cover;
+}
+
+.article figure figcaption {
+  font-size: 1.2em;
+  text-align: center;
+  color: var(--theme-color);
+  margin-top: 20px;
+}
+
+.article .text {
+  grid-row: 2;
+}
+
+/* 桌面端，图片和文字在同一行，并且图片在左边，文字在右边 */
+@media (min-width: 768px) {
+  .article figure {
+    width: 44%;
+    grid-row: 1;
+  }
+
+  .article .text {
+    width: 44%;
+    grid-row: 1;
+    justify-self: end;
+    font-size: 20px;
+    padding: 0;
+  }
+}
+
+/* gallery */
+.gallery {
+  display: grid;
+  grid-template-rows: 173px 136px 136px;
+  grid-template-columns: 158fr 167fr;
+  gap: 10px;
+  /* 图片区域布局 */
+  grid-template-areas: "A A"
+    "B C"
+    "B D";
+  margin: 14px 0;
+}
+
+/* 让图片自适应网格 */
+.gallery img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery img:nth-child(1) {
+  grid-area: A;
+}
+
+.gallery img:nth-child(2) {
+  grid-area: B;
+}
+
+.gallery img:nth-child(3) {
+  grid-area: C;
+}
+
+.gallery img:nth-child(4) {
+  grid-area: D;
+}
+
+@media (min-width: 768px) {
+  .gallery {
+    grid-template-columns: 334fr 248fr 248fr;
+    grid-template-rows: 278px 205px;
+    grid-template-areas: "B A A"
+      "B C D";
+    gap: 15px;
+    margin: 16px 0;
+  }
+}
+
+/* ============================================ */
+
+/* footer */
+/* ============================================ */
+
+footer {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  padding: 80px 0;
+  background-color: rgb(31, 34, 29);
+  color: white;
+}
+
+/* 增加优先级，移除外边距，否则装饰线触碰不到 footer */
+footer.parts-grid {
+  margin: 0;
+}
+
+/* 文字和图标都放在第一行 */
+footer>* {
+  grid-row: 1;
+}
+
+.addr h3 {
+  margin-top: 0;
+  font-size: 1.8em;
+}
+
+.addr address {
+  font-size: .9em;
+  line-height: 1.3;
+}
+
+/* 图标上移到 footer 上边界 */
+.chat {
+  width: 120px;
+  justify-self: end;
+  margin-top: -110px;
+  text-align: center;
+}
+
+/* 桌面端，图标与文字水平对齐  */
+@media (min-width: 768px) {
+  .chat {
+    margin-top: 0;
+  }
+}
+
+/* ============================================ */
