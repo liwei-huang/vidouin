@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>天气查询</title>
+  <link rel="stylesheet" href="./vid-5.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>查询当前天气</h1>
+    <p>中文城市名字只支持拼音</p>
+    <div class="input-box">
+      <div>
+        <label for="input-city">城市：</label>
+        <input type="text" id="input-city">
+      </div>
+      <div>
+        <button id="query-by-city">查询</button>
+        <button id="query-by-position">查询当前位置的天气</button>
+      </div>
+    </div>
+    <div class="input-result">
+      <ul id="info-list">
+        <li>城市：<span></span></li>
+        <li>温度（°C）：<span></span></li>
+        <li>湿度（%rh）：<span></span></li>
+        <li>天气：<span></span></li>
+      </ul>
+      <p id="query-state"></p>
+    </div>
+  </div>
+  <script src="./vid-5.js"></script>
+</body>
+
+</html>

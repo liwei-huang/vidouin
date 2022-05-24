@@ -1,0 +1,77 @@
+.container {
+  width: 600px;
+  height: 400px;
+  margin: 200px auto;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+}
+
+.battery-pole {
+  width: 40px;
+  height: 15px;
+  background-color: rgb(33, 33, 33);
+}
+
+.battery {
+  --height: 280px;
+  --level: 0.4;
+  width: 150px;
+  height: 280px;
+  background-image: linear-gradient(to top, #ff0844 0%, #f3c90f 20%, #1ed646 100%);
+  border: 2px solid rgb(33, 33, 33);
+  position: relative;
+  overflow: hidden;
+}
+
+.mask {
+  width: 280px;
+  height: 280px;
+  background-color: rgb(255, 255, 255);
+  position: absolute;
+  transform: translateY(calc(0px - var(--height) * var(--level))) rotate(0);
+  left: 0;
+}
+
+.mask.mask-charging:nth-child(1) {
+  border-radius: 68% 72% 75% 79%;
+  opacity: 0.6;
+  left: -50%;
+}
+
+.mask.mask-charging:nth-child(2) {
+  border-radius: 80% 70% 79% 78%;
+  opacity: 0.5;
+  left: -42%;
+}
+
+.mask.mask-charging:nth-child(3) {
+  border-radius: 76% 69% 77% 73%;
+  opacity: 0.4;
+  left: -56%;
+}
+
+.mask.mask-charging:nth-child(4) {
+  border-radius: 68% 70% 72% 78%;
+  opacity: 0.3;
+  left: -46%;
+}
+
+.mask.mask-charging {
+  animation: 4s ease-in-out infinite charging;
+}
+
+
+@keyframes charging {
+  from {
+    transform: translateY(calc(0px - var(--height) * var(--level))) rotate(0);
+  }
+
+  to {
+    transform: translateY(calc(0px - var(--height))) rotate(360deg);
+  }
+}
+
+.battery-level {
+  font-size: 26px;
+}

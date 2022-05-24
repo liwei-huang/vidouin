@@ -1,0 +1,57 @@
+.container {
+  width: 800px;
+  margin: 100px auto;
+}
+
+.container h1 {
+  text-align: center;
+}
+
+.input-box {
+  display: flex;
+  justify-content: space-between;
+  font-size: 22px;
+}
+
+.input-box div:first-child {
+  flex: 1 0 500px;
+  position: relative;
+}
+
+.input-box div:first-child input {
+  position: absolute;
+  top: 2px;
+  width: 400px;
+  height: 22px;
+  font-size: 18px;
+  color: dodgerblue;
+}
+
+.input-box div:last-child button {
+  cursor: pointer;
+  background: dodgerblue;
+  color: aliceblue;
+  font-size: 18px;
+  border: 0;
+  border-radius: 4px;
+  margin: 0 4px;
+  padding: 4px 6px;
+}
+
+.input-result ul {
+  display: flex;
+  justify-content: space-between;
+  margin: 40px 0;
+  padding: 0;
+  list-style: none;
+  font-size: 18px;
+}
+
+.input-result ul li {
+  flex: 0 1 200px;
+}
+
+.input-result ul li span {
+  color: tomato;
+  font-weight: bolder;
+}

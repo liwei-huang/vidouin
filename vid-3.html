@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>ruby、rt、rp、bdi 和 bdo 标签</h1>
+  <!-- rt 单个注音，例如拼音、平假名。 -->
+  <p><ruby>哺<rt>bŭ</rt>糟<rt>zāo</rt>歠<rt>chuò</rt>醨<rt>lí</rt></ruby></p>
+  <p><ruby>鬼<rt>き</rt>門<rt>もん</rt></ruby>の<ruby>方<rt>ほう</rt>角<rt>がく</rt></ruby>を<ruby>凝<rt>ぎょう</rt>視<rt>し</rt></ruby>する</p>
+
+  <!-- rt 组合使用，例如提供另一种语言的翻译，lang 属性指定语言。 -->
+  <p><ruby>菖蒲<rt lang="en">calamus</rt></ruby></p>
+
+  <!-- 多级 ruby。 -->
+  <p>
+    <ruby>
+      <ruby>濩<rt>hù</rt>落<rt>luò</rt></ruby>
+      <rt lang="fr">tomber</rt>
+    </ruby>
+  </p>
+
+  <!-- rp 提供后备圆括号。 -->
+  <p>
+    <ruby>漢<rp>（</rp><rt>かん</rt><rp>）</rp>字<rp>（</rp><rt>じ</rt><rp>）</rp></ruby>
+  </p>
+  <img src="./assets/ruby.png" alt="ruby rp">
+
+  <!-- bdi 隔离文本。 -->
+  <ul>
+    <li>简钥: 13 票</li>
+    <li><bdi>محمد بن سلمان بن امین</bdi>: 12 票</li>
+    <li>Maverick: 18 票</li>
+  </ul>
+
+  <!-- 如果去掉 bdi，从右往左写的阿拉伯文字会影响周围文字（12 票）。 -->
+  <!-- 在编辑的时候，光标会自动变成从右往左编辑，周围的文字自动变换位置，所以需要 bdi 隔离。 -->
+  <ul>
+    <li>简钥: 13 票</li>
+    <li>محمد بن سلمان بن امین: 12 票</li>
+    <li>Maverick: 18 票</li>
+  </ul>
+
+  <!-- 例如，想要强制把 legalia 变成从右往左书写。 -->
+  <p>In responsio ad notas quae requiruntur <bdo dir="rtl">legalia</bdo> loci parere.</p>
+</body>
+</html>

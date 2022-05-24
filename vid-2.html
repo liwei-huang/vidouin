@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .fig {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .fig div:first-child {
+      flex: 0 1 600px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>cite、q、blockquote、figure 和 figcaption 标签的用法</h1>
+  <!-- Announcing the new `group` step type 是文章的标题，使用 cite 标签。 -->
+  <p>Mel Kaulfuss 写的 <cite>Announcing the new `group` step type</cite> 是一篇好文章。</p>
+
+  <!-- 下面是使用 cite 标签的有一个例子。 -->
+  <h3>参考文献</h3>
+  <p>[1] 段文辉，张刚.<cite>纳米材料热传导</cite> [M].北京：科学技术出版社，2017</p>
+  <p>[2] Carslaw H S, Jaeger J C. <cite>Conduction of heat in solids</cite>[M]. 2 ed. Oxford: Clarendon Press, 1959.</p>
+
+  <!-- 使用 q 标签会自动加双引号。 -->
+  <p>信中说：<q>飞鸟尽，良弓藏。狡兔死，走狗烹。</q></p>
+  <!-- q 标签的  cite 属性指定引用的来源，属性值是合法的 URL。-->
+  <p>MDN 网站的标语是 <q cite="https://developer.mozilla.org/en-US/">Resources for Developers, by Developers</q>。</p>
+
+  <!-- blockquote 引用较长的文本。而且会在左边和右边设置外边距。 -->
+  <p>以下文本摘自 HTML Living Standard：</p>
+  <blockquote>
+    <p>For its first five years (1990-1995), HTML went through a number of revisions and experienced a number of extensions, primarily hosted first at CERN, and then at the IETF.</p>
+    <p>With the creation of the W3C, HTML's development changed venue again. A first abortive attempt at extending HTML in 1995 known as HTML 3.0 then made way to a more pragmatic approach known as HTML 3.2, which was completed in 1997. HTML4 quickly followed later that same year.</p>
+  </blockquote>
+
+  <!-- 下面的图片是文本的插图，可以使用 figure 标签。 -->
+  <div class="fig">
+    <div>
+      <p><b>例题 2-4 </b>在一个建筑物中，有如图 2-13 的结构。钢柱直径 <var>d</var>=50mm，长度 <var>l</var>=300mm，材料导热系数为 <var>λ</var>=50W/(m·K)，其他两个端面分别维持在 60°C 与 20°C，四周为建筑保温材料。计算通过钢柱的导热量。</p>
+    </div>
+    <div>
+        <figure>
+          <img src="./assets/figure.png" alt="figure 2-13">
+        </figure>
+        <figcaption>图 2-13 例题 2-4 插图</figcaption>
+    </div>
+  </div>
+</body>
+
+</html>

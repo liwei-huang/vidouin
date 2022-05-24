@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    button {
+      cursor: pointer;
+      background-color: lightcoral;
+      color: white;
+      font-size: .8rem;
+      border: 0;
+      border-radius: .4rem;
+      margin: 1rem .4rem;
+      padding: .4rem;
+    }
+
+    details>summary {
+      color: peru;
+    }
+
+    details[open]>summary {
+      color: olive;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>details、summary 和 dialog 标签。</h1>
+  <!-- 
+    大家好！这个视频讲解 details、summary 和 dialog 标签的使用。
+    details 是一个可以展开和闭合的小部件，向用户提供附加的信息或控件。
+    summary 是 details 的第一个子元素。当 details 闭合时，只显示 summary 的内容，
+    当 details 展开时，summary 和后面的内容都会显示。
+
+    open 是一个布尔属性，存在时，details 处于展开状态，不存在时，details 处于闭合状态。
+  -->
+  <details open>
+    <summary>今天的温度是 21°C。</summary>
+    <p>出游：适宜</p>
+    <p>穿衣：风衣类</p>
+    <p>洗车：不适宜</p>
+    <p>化妆：控油</p>
+  </details>
+
+  <!-- dialog 是一个对话框。open 是一个布尔属性，存在时，就显示 dialog，不存在时，就隐藏 dialog。 -->
+  <dialog open id="registryDialog">
+    <label for="username">用户名：</label>
+    <input type="text" id="username">
+    <br>
+    <label for="userpwd">密码：</label>
+    <input type="password" id="userpwd">
+    <!-- dialog 是没有关闭按钮的，所以需要提供额外的关闭设置。 -->
+    <!-- 提供 Modal 类型的 dialog 的关闭按钮，否则用法无法关闭 dialog。 -->
+    <button id="closeModalDialog">关闭</button>
+  </dialog>
+
+  <!-- 下面是两种关闭或打开对话框的方式。 -->
+  <!-- 第一种，设置 dialog 的 open 属性，但是不会触发 close 事件。 -->
+  <button id="manualCloseDialog">手动切换对话框</button>
+
+  <!-- 第二种，调用 dialog 的 close 方法，会触发 close 事件。 -->
+  <button id="methodCloseDialog">事件切换对话框</button>
+
+  <!-- 打开 Modal 类型的 dialog。 -->
+  <!-- Modal 类型的 dialog 会聚焦 dialog，页面上其他部分是无法点击的。 -->
+  <button id="modalDialog">打开 Modal 类型的 dialog</button>
+
+  <script>
+    const registryDialog = document.querySelector('#registryDialog');
+    const manualCloseDialog = document.querySelector('#manualCloseDialog');
+    const methodCloseDialog = document.querySelector('#methodCloseDialog');
+    const modalDialog = document.querySelector('#modalDialog');
+
+    // 监听 dialog 的 close 事件
+    registryDialog.addEventListener('close', () => console.log('对话框关闭了。'));
+
+    // 修改 dialog 的 open 属性，可以看见，控制台没有打印对话框关闭了。
+    manualCloseDialog.addEventListener('click', () => registryDialog.toggleAttribute('open'));
+
+    const closeDialog = () => {
+      if (registryDialog.hasAttribute('open')) {
+        registryDialog.close();
+      } else {
+        registryDialog.show();
+      }
+    }
+    // 调用 dialog 的 close 方法。控制台打印了。
+    methodCloseDialog.addEventListener('click', closeDialog);
+
+    // dialog 有 Modal 类型，需要调用 showModal 方法打开。
+    modalDialog.addEventListener('click', () => {
+      // 打开 Modal 类型的 dialog 需要确保当前的 dialog 没有 open 属性
+      if (registryDialog.hasAttribute('open')) {
+        registryDialog.removeAttribute('open');
+      }
+      registryDialog.showModal();
+    });
+    // 关闭 Modal 类型的 dialog。
+    document.querySelector('#closeModalDialog').addEventListener('click', closeDialog);
+
+    // 本期内容结束，感谢收看！
+  </script>
+</body>
+
+</html>
